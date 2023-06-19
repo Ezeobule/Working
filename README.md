@@ -1,2 +1,2 @@
-# Working
-Studying Data science.
+# Learning Data Science
+Github hands on
