@@ -1,0 +1,1 @@
+This file is not the workflow trigger. The actual trigger is a GitHub issue event.
