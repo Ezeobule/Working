@@ -22,7 +22,7 @@ jobs:
       - run: python scripts/npc_contact_extract.py
 
       # Ensure local branch is up-to-date before pushing to avoid non-fast-forward errors
-      - name: Fetch and rebase on origin/main
+      - name: Fetch and rebase on the current branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -30,12 +30,15 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Use the GITHUB_TOKEN for authenticated fetch/push
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch origin main
-          # Attempt to rebase onto origin/main; if it fails, try pull --rebase as fallback
-          git rebase origin/main || git pull --rebase origin main || true
+          # Derive branch name from GITHUB_REF (works on workflow triggered by refs/heads/*)
+          BRANCH=${GITHUB_REF#refs/heads/}
+          echo "Branch detected: $BRANCH"
+          git fetch origin "$BRANCH"
+          # Attempt to rebase onto origin/BRANCH; if it fails, try pull --rebase as fallback
+          git rebase "origin/$BRANCH" || git pull --rebase origin "$BRANCH" || true
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Refresh generated contact data
           file_pattern: npc_output/*
-          branch: main
+          branch: ${{ github.ref_name }}
