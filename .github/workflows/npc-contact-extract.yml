@@ -16,6 +16,11 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/split_output.py
+      - name: Rechunk transfer files
+        run: |
+          cat npc_output/compact_parts/transfer_*.txt > /tmp/transfer_all.txt
+          rm npc_output/compact_parts/transfer_*.txt
+          split -b 5000 -d -a 3 --additional-suffix=.txt /tmp/transfer_all.txt npc_output/compact_parts/transfer_
       - name: Save generated parts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -23,7 +28,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add npc_output/compact_parts/
-          git commit -m "Add compact output parts" || exit 0
+          git commit -m "Add smaller transfer files" || exit 0
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           git pull --rebase origin main || true
           git push origin HEAD:main
