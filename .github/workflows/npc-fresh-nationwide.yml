@@ -2,7 +2,7 @@ name: NPC Fresh Nationwide Extraction
 
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
 
 permissions:
   contents: read
