@@ -2,12 +2,14 @@ name: NPC Contact Extract
 on:
   push:
     paths:
+      - 'scripts/npc_contact_extract.py'
       - '.github/workflows/npc-contact-extract.yml'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   extract:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -17,7 +19,7 @@ jobs:
           python-version: '3.12'
       - run: pip install requests beautifulsoup4
       - run: python scripts/npc_contact_extract.py
-      - uses: actions/upload-artifact@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          name: npc-contact-output
-          path: npc_output/
+          commit_message: Add NPC public contact extraction output
+          file_pattern: npc_output/*
