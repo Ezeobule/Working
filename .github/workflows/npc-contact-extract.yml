@@ -7,38 +7,23 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - run: pip install requests beautifulsoup4
-
-      - run: python scripts/npc_contact_extract.py
-
-      # Ensure local branch is up-to-date before pushing to avoid non-fast-forward errors
-      - name: Fetch and rebase on the current branch
+      - run: python scripts/split_output.py
+      - name: Save generated parts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Use the GITHUB_TOKEN for authenticated fetch/push
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          # Derive branch name from GITHUB_REF (works on workflow triggered by refs/heads/*)
-          BRANCH=${GITHUB_REF#refs/heads/}
-          echo "Branch detected: $BRANCH"
-          git fetch origin "$BRANCH"
-          # Attempt to rebase onto origin/BRANCH; if it fails, try pull --rebase as fallback
-          git rebase "origin/$BRANCH" || git pull --rebase origin "$BRANCH" || true
-
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Refresh generated contact data
-          file_pattern: npc_output/*
-          branch: ${{ github.ref_name }}
+          git add npc_output/compact_parts/
+          git commit -m "Add compact output parts" || exit 0
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git pull --rebase origin main || true
+          git push origin HEAD:main
