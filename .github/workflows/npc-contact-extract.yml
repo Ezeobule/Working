@@ -1,11 +1,11 @@
-name: NPC Contact Extract
+name: Data Refresh
 on:
-  pull_request:
-  workflow_dispatch:
+  issues:
+    types: [opened]
 permissions:
   contents: read
 jobs:
-  extract:
+  refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -17,5 +17,5 @@ jobs:
       - run: python scripts/npc_contact_extract.py
       - uses: actions/upload-artifact@v4
         with:
-          name: npc-contact-output
+          name: data-output
           path: npc_output/
