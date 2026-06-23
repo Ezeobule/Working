@@ -1,0 +1,25 @@
+{
+  "target_unique_contacts": 1000,
+  "unique_contacts_available": 1712,
+  "unique_contacts_written": 1000,
+  "unique_profiles_discovered": 949,
+  "profiles_parsed": 949,
+  "profiles_failed": 0,
+  "states_requested": [
+    "Enugu",
+    "Ebonyi",
+    "Imo",
+    "Anambra",
+    "Delta",
+    "Abia",
+    "Edo",
+    "Rivers",
+    "Cross River",
+    "Akwa Ibom",
+    "Abuja",
+    "Ondo",
+    "Ekiti",
+    "Kaduna"
+  ],
+  "extraction_date": "2026-06-23"
+}
