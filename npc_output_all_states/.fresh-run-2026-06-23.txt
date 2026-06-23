@@ -1,0 +1,1 @@
+Fresh nationwide extraction requested on 2026-06-23. This marker ensures the next workflow run commits new output even if counts are unchanged.
