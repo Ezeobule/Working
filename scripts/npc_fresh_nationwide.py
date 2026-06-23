@@ -4,7 +4,7 @@ import json
 import os
 from datetime import datetime, timezone
 
-import scripts.npc_contact_extract as npc
+import npc_contact_extract as npc
 
 npc.STATES = [
     ("Abia", "abia"), ("Adamawa", "adamawa"), ("Akwa Ibom", "akwa-ibom"),
