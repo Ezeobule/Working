@@ -22,5 +22,13 @@
     "part_018.csv",
     "part_019.csv",
     "part_020.csv"
-  ]
+  ],
+  "transfer_files": [
+    "transfer_001.txt",
+    "transfer_002.txt",
+    "transfer_003.txt",
+    "transfer_004.txt"
+  ],
+  "transfer_characters": 56108,
+  "raw_bytes": 302699
 }
