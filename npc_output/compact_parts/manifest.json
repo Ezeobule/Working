@@ -1,0 +1,26 @@
+{
+  "rows": 1000,
+  "part_size": 50,
+  "files": [
+    "part_001.csv",
+    "part_002.csv",
+    "part_003.csv",
+    "part_004.csv",
+    "part_005.csv",
+    "part_006.csv",
+    "part_007.csv",
+    "part_008.csv",
+    "part_009.csv",
+    "part_010.csv",
+    "part_011.csv",
+    "part_012.csv",
+    "part_013.csv",
+    "part_014.csv",
+    "part_015.csv",
+    "part_016.csv",
+    "part_017.csv",
+    "part_018.csv",
+    "part_019.csv",
+    "part_020.csv"
+  ]
+}
